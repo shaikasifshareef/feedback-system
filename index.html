@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Feedback Form</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h2>Submit Feedback</h2>
+  <form id="feedbackForm">
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Category:</label><br>
+    <select name="category">
+      <option value="Bug">Bug</option>
+      <option value="Suggestion">Suggestion</option>
+      <option value="Complaint">Complaint</option>
+    </select><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message" required></textarea><br><br>
+
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <script>
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+
+      const formData = new FormData(this);
+
+      fetch('submit.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert("Feedback submitted successfully!");
+        document.getElementById('feedbackForm').reset(); // clear the form
+      })
+      .catch(error => {
+        alert("Something went wrong. Please try again.");
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
